@@ -12,24 +12,31 @@ When a task is generated, it is placed into a queue, which acts as a holding are
 ### The Architecture
 
 **Task Producers**
+
 The components or processes in the system that generate tasks. These could be user requests, scheduled jobs, or other system processes that require computation or handling. When a task producer creates a task, it packages the necessary information (task type, paramters, etc.) and sends it to the taks queue.
 
 **Task Queue**
+
 The central component that temporarily stores tasks until they are picked up by workers. Acts as a buffer between task producers and workers. It manages the flow of tasks, handles task prioritization, and ensures tasks are processed in the order they are received (FIFO), unless otherwise specified
 
 **Task Consumers (Workers)**
+
 Components that consume tasks from the queue and executes them. They are distributed across multiple servers or machines, enabling parallel processing. Each worker listens to the task queue and picks up tasks as they become available. Upon receiving a task, the worker performs the required computation or processing, which may involve interacting with databases, external services, or other parts of the system. Once the task is completed, the worker may send the result back to the producer or log it in a designated storage.
 
 **Result Backend**
+
 Where the results of tasks are stored. Optional, depending on whether the system needs to keep track of task outcomes. After a worker completes a task, the result can be stored in a database, a file system, or any other storage solution. The result backend allows task producers or other componenets to retrieve the outcome of a task at a later time.
 
 **Message Broker**
+
 Often integrated with the task queue to manage the distribution and delivery of messages (tasks) between producers and workers. Handles the routing of tasks, load balancing across workers, and ensuring reliable delivery of tasks even in the case of network failure or worker crashes.
 
 **Scheduler (optional)**
+
 Responsible for triggering tasks based on a predefined schedule or timing. It can be used to automate recurring tasks, such as daily reports or periodic data processing jobs. The scheduler adds tasks to the queue at specified intervals.
 
 **Monitoring and Logging**
+
 Monitoring tools are used to track the health, performance, and status of the distributed task queue system. These tools can provide insights into task completion rates, worker availability, queue length, and error rates. Logging helps in debugging and auditing tasks by keeping a detailed record of task execution.
 
 ### Key Characterisitics
